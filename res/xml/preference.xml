@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:dialogTitle="@string/title_enter_xbmc"
+        android:title="@string/xbmc_host"
+        android:key="pref_xbmcip"
+        android:id="@+id/xbmcip"/>
+    <EditTextPreference
+        android:dialogTitle="@string/title_enter_xbmc_port"
+        android:key="pref_xbmcport"
+        android:title="@string/xbmc_port"
+        android:numeric="integer"
+        android:id="@+id/xbmcport"/>
+    
+</PreferenceScreen>

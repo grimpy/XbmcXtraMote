@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- No translation of sample extensions -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Name of app, shown when installing/uninstalling extension -->
+    <string name="app_name">XBMC Extra Remote Control</string>
+    <!-- Title of preference activity -->
+    <string name="preference_activity_title">XBMC Extra Remote Control settings</string>
+    <!-- Name of extension, shown in preferences -->
+    <string name="extension_name">XBMC Extra Remote Control</string>
+    <!-- Configuration title shown in preferences -->
+    <string name="configuration_text">XBMC Extra Remote Control settings</string>
+    <!-- Menu option shown in preferences -->
+    <string name="xbmc_host">XBMC Host</string>
+    <string name="xbmc_port">XBMC Port</string>
+    <string name="title_enter_xbmc">Enter XBMC host IP</string>
+    <string name="title_enter_xbmc_port">Enter XBMC API Port</string>
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/smart_watch_2_control_width"
+    android:layout_height="@dimen/smart_watch_2_control_height"
+    android:columnCount="3"
+    android:rowCount="3" >
+
+    <ImageView
+        android:id="@+id/tvshow"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/tvshow" />
+
+    <ImageView
+        android:id="@+id/up_arrow"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/up" />
+
+    <ImageView
+        android:id="@+id/movies"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/movies" />
+
+    <ImageView
+        android:id="@+id/left_arrow"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/left" />
+
+    <ImageView
+        android:id="@+id/select"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/confirm" />
+
+    <ImageView
+        android:id="@+id/right_arrow"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/right" />
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/down_arrow"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/down" />
+
+    <ImageView
+        android:id="@+id/info"
+        android:layout_width="73px"
+        android:layout_height="58px"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/info" />
+
+</GridLayout>
