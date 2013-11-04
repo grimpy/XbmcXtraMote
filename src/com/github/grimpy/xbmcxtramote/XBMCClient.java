@@ -42,7 +42,7 @@ public class XBMCClient {
     }
     
     public void sendSelect() {
-        inputAction("enter");
+        sendCmd("Input.Select", null);
     }
     
     public void forward() {
