@@ -2,15 +2,9 @@ package com.github.grimpy.xbmcxtramote;
 
 import com.github.grimpy.xbmcxtramote.R;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.util.Log;
 
 
 /**

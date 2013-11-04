@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,24 +27,19 @@ import com.github.grimpy.xbmcxtramote.R;
  */
 class ControlSmartWatch2 extends ControlExtension {
 
-    private static final int ANIMATION_DELTA_MS = 500;
-    private static final int SELECT_TOGGLER_MS = 2000;
     private static final int MENU_ITEM_FAV = 0;
     private static final int MENU_ITEM_CONTEXT = 1;
     private static final int MENU_ITEM_HOME = 2;
-    private static final int MENU_ITEM_3 = 3;
-    private static final int MENU_ITEM_4 = 4;
-    private static final int MENU_ITEM_5 = 5;
     
     private int mActiveLayout = 0;
     private int[] mLayoutids =  {R.layout.navigate, R.layout.playback};
 
     private Handler mHandler;
     private XBMCClient mXBMC;
+    private PreferenceManager mPrefManager;
 
     private List<ControlViewGroup> mLayouts = new ArrayList<ControlViewGroup>();
 
-    private boolean mTextMenu = false;
     Bundle[] mMenuItemsText = new Bundle[3];
     Bundle[] mMenuItemsIcons = new Bundle[3];
 
@@ -62,7 +59,11 @@ class ControlSmartWatch2 extends ControlExtension {
             throw new IllegalArgumentException("handler == null");
         }
         mHandler = handler;
-        mXBMC = new XBMCClient("http://192.168.1.3:8080/jsonrpc");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String ip = prefs.getString("pref_xbmcip", "");
+        String port = prefs.getString("pref_xbmcport", "8080");
+        
+        mXBMC = new XBMCClient(String.format("http://%s:%s/jsonrpc", ip, port));
         setupClickables(context);
         initializeMenus();
     }
