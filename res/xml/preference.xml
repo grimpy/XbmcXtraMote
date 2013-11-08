@@ -12,5 +12,16 @@
         android:title="@string/xbmc_port"
         android:numeric="integer"
         android:id="@+id/xbmcport"/>
+    <EditTextPreference
+        android:dialogTitle="@string/title_enter_xbmc_user"
+        android:key="pref_xbmcuser"
+        android:title="@string/xbmc_user"
+        android:id="@+id/xbmcuser"/>
+    <EditTextPreference
+        android:dialogTitle="@string/title_enter_xbmc_passwd"
+        android:key="pref_xbmcpasswd"
+        android:title="@string/xbmc_passwd"
+        android:inputType="textPassword"
+        android:id="@+id/xbmcpasswd"/>
     
 </PreferenceScreen>

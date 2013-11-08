@@ -1,22 +1,62 @@
 package com.github.grimpy.xbmcxtramote;
 
-import org.alexd.jsonrpc.*;
+import java.net.HttpCookie;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
+import com.thetransactioncompany.jsonrpc2.client.ConnectionConfigurator;
+import com.thetransactioncompany.jsonrpc2.client.JSONRPC2Session;
+import com.thetransactioncompany.jsonrpc2.client.JSONRPC2SessionException;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Base64;
 
-public class XBMCClient {
-    private final String cmdKey = "hack_cmd_to_pass";
-    private JSONRPCClient client;
+class HttpConfigurator implements ConnectionConfigurator {
+    private String username;
+    private String password;
 
-    public XBMCClient(String url) {
+    @Override
+    public void configure(HttpURLConnection con) {
+        String head = String.format("%s:%s", username, password);
+        head = Base64.encodeToString(head.getBytes(), Base64.DEFAULT);
+        con.setRequestProperty("Authorization", String.format("Basic %s", head));
+    }
+
+    public HttpConfigurator(String username, String password) {
         super();
-        client = JSONRPCClient.create(url, JSONRPCParams.Versions.VERSION_2);
-        client.setSoTimeout(1000);
+        this.username = username;
+        this.password = password;
     }
     
+}
+
+
+public class XBMCClient {
+    private JSONRPC2Session mySession;
+
+    public XBMCClient(String url, String username, String password) {
+        super();
+        URL urlobject;
+        try {
+            urlobject = new URL(url);
+        } catch (MalformedURLException e) {
+            return;
+        }
+        mySession = new JSONRPC2Session(urlobject);
+        if (!TextUtils.isEmpty(password)) {
+            HttpConfigurator conf = new HttpConfigurator(username, password);
+            mySession.setConnectionConfigurator(conf);
+        }
+        mySession.getOptions().setConnectTimeout(1000);
+    }
+
     public void sendLeft() {
         sendCmd("Input.Left", null);
     }
@@ -83,25 +123,16 @@ public class XBMCClient {
     
     
     private void inputAction(String action) {
-        JSONObject params = new JSONObject();
-        try {
-            params.put("action", action);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("action", action);
         sendCmd("Input.ExecuteAction", params);
     }
 
     
     private void activateWindow(String name, String option) {
-        JSONObject params = new JSONObject();
-        try {
-            params.put("window", name);
-            params.put("parameters", new JSONArray().put(option));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("window", name);
+        params.put("parameters", new JSONArray().put(option));
         sendCmd("GUI.ActivateWindow", params);
     }
 
@@ -128,21 +159,17 @@ public class XBMCClient {
 
     
     private void sendToPlayer(String cmd) {
-        JSONObject params = new JSONObject();
-        try {
-            params.put("playerid", Integer.valueOf(1));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("playerid", Integer.valueOf(1));
         sendCmd(cmd, params);
     }
     
-    class SendCMD extends AsyncTask<JSONObject, Void, Void> {
-        protected Void doInBackground(JSONObject... params) {
-            String cmd = (String) params[0].remove(cmdKey);
+    class SendCMD extends AsyncTask<JSONRPC2Request, Void, Void> {
+        protected Void doInBackground(JSONRPC2Request... reqs) {
             try {
-                client.call(cmd, params[0]);
-            } catch (JSONRPCException e) {
+                mySession.send(reqs[0]);
+            } catch (JSONRPC2SessionException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return null;
@@ -150,17 +177,9 @@ public class XBMCClient {
     }
 
     
-    private void sendCmd(String cmd, JSONObject params) {
-        if (params == null) {
-            params = new JSONObject();
-        }
-        try {
-            params.put(cmdKey, cmd);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        new SendCMD().execute(params);
+    private void sendCmd(String cmd, Map<String,Object> params) {
+        JSONRPC2Request req = new JSONRPC2Request(cmd, params, 1);
+        new SendCMD().execute(req);
     }
     
 }

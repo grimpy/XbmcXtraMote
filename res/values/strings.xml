@@ -12,6 +12,10 @@
     <!-- Menu option shown in preferences -->
     <string name="xbmc_host">XBMC Host</string>
     <string name="xbmc_port">XBMC Port</string>
+    <string name="xbmc_user">XBMC User</string>
+    <string name="xbmc_passwd">XBMC Password</string>
     <string name="title_enter_xbmc">Enter XBMC host IP</string>
     <string name="title_enter_xbmc_port">Enter XBMC API Port</string>
+    <string name="title_enter_xbmc_user">Enter XBMC API User</string>
+    <string name="title_enter_xbmc_passwd">Enter XBMC API Password</string>
 </resources>

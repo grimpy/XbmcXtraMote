@@ -36,7 +36,6 @@ class ControlSmartWatch2 extends ControlExtension {
 
     private Handler mHandler;
     private XBMCClient mXBMC;
-    private PreferenceManager mPrefManager;
 
     private List<ControlViewGroup> mLayouts = new ArrayList<ControlViewGroup>();
 
@@ -62,8 +61,10 @@ class ControlSmartWatch2 extends ControlExtension {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String ip = prefs.getString("pref_xbmcip", "");
         String port = prefs.getString("pref_xbmcport", "8080");
+        String user = prefs.getString("pref_xbmcuser", "xbmc");
+        String passwd = prefs.getString("pref_xbmcpasswd", "");
         
-        mXBMC = new XBMCClient(String.format("http://%s:%s/jsonrpc", ip, port));
+        mXBMC = new XBMCClient(String.format("http://%s:%s/jsonrpc", ip, port), user, passwd);
         setupClickables(context);
         initializeMenus();
     }
