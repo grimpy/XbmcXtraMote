@@ -93,11 +93,19 @@ public class XBMCClient {
         inputAction("rewind");
     }
     
-    public void previous() {
+    public void previousChapter() {
         inputAction("bigstepback");
     }
     
     public void next() {
+        inputAction("stepforward");
+    }
+    
+    public void previous() {
+        inputAction("stepback");
+    }
+    
+    public void nextChapter() {
         inputAction("bigstepforward");
     }
     

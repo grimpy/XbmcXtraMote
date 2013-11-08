@@ -35,6 +35,7 @@
         android:layout_width="73px"
         android:layout_height="58px"
         android:clickable="true"
+        android:longClickable="true"
         android:scaleType="center"
         android:src="@drawable/prev" />
 
@@ -51,6 +52,7 @@
         android:layout_width="73px"
         android:layout_height="58px"
         android:clickable="true"
+        android:longClickable="true"
         android:scaleType="center"
         android:src="@drawable/next" />
 

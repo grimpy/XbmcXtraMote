@@ -15,8 +15,10 @@ import android.view.View;
 import com.sonyericsson.extras.liveware.aef.control.Control;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlExtension;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlObjectClickEvent;
+import com.sonyericsson.extras.liveware.extension.util.control.ControlTouchEvent;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlView;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlView.OnClickListener;
+import com.sonyericsson.extras.liveware.extension.util.control.ControlView.OnLongClickListener;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlViewGroup;
 import com.github.grimpy.xbmcxtramote.R;
 
@@ -131,7 +133,6 @@ class ControlSmartWatch2 extends ControlExtension {
 
     @Override
     public void onSwipe(int direction) {
-        // TODO Auto-generated method stub
         super.onSwipe(direction);
         if (direction == Control.Intents.SWIPE_DIRECTION_LEFT) {
             mActiveLayout--;
@@ -150,7 +151,11 @@ class ControlSmartWatch2 extends ControlExtension {
     public void onObjectClick(final ControlObjectClickEvent event) {
         Log.d(MyExtensionService.LOG_TAG, "onObjectClick() " + event.getClickType());
         if (event.getLayoutReference() != -1) {
-            mLayouts.get(mActiveLayout).onClick(event.getLayoutReference());
+            if (event.getClickType() == Control.Intents.CLICK_TYPE_SHORT) {
+                mLayouts.get(mActiveLayout).onClick(event.getLayoutReference());
+            } else if (event.getClickType() == Control.Intents.CLICK_TYPE_LONG) {
+                mLayouts.get(mActiveLayout).onLongClick(event.getLayoutReference());
+            }
         }
     }
 
@@ -235,6 +240,13 @@ class ControlSmartWatch2 extends ControlExtension {
                 @Override
                 public void onClick() {
                     mXBMC.sendSelect();
+               }
+            });
+            select.setOnLongClickListener(new OnLongClickListener() {
+                
+                @Override
+                public void onLongClick() {
+                    mXBMC.showContextMenu();
                 }
             });
             ControlView back = layout.findViewById(R.id.back_arrow);
@@ -311,11 +323,26 @@ class ControlSmartWatch2 extends ControlExtension {
                 mXBMC.next();
             }
         });
+        next.setOnLongClickListener(new OnLongClickListener() {
+            
+            @Override
+            public void onLongClick() {
+                mXBMC.nextChapter();
+                
+            }
+        });
         ControlView prev = layout.findViewById(R.id.prev);
         prev.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick() {
                 mXBMC.previous();
+            }
+        });
+        prev.setOnLongClickListener(new OnLongClickListener() {
+            
+            @Override
+            public void onLongClick() {
+                mXBMC.previousChapter();
             }
         });
 
