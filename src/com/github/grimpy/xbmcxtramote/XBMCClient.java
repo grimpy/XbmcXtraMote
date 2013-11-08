@@ -55,6 +55,7 @@ public class XBMCClient {
             mySession.setConnectionConfigurator(conf);
         }
         mySession.getOptions().setConnectTimeout(1000);
+        mySession.getOptions().setReadTimeout(1000);
     }
 
     public void sendLeft() {
@@ -140,7 +141,9 @@ public class XBMCClient {
     private void activateWindow(String name, String option) {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("window", name);
-        params.put("parameters", new JSONArray().put(option));
+        String[] options = new String[1];
+        options[0] = option;
+        params.put("parameters", options);
         sendCmd("GUI.ActivateWindow", params);
     }
 
